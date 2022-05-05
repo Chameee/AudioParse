@@ -61,6 +61,7 @@ def main():
     
     p.add_argument('--mp4_path', '-p', type=str, required=True)
     p.add_argument('--save_json_dir', '-s', type=str, default='')
+    p.add_argument('--sample_interval', '-i', type=float, default=1.0)
        
     args = p.parse_args()
     # load mp4 and convert to wav
@@ -71,7 +72,7 @@ def main():
     raw_json = get_diary_raw_json(vocal_wav_path)
     
     # convert raw json to {'millisecond': xx, 'num_people_talking: xx} format
-    res_json = rawjson2json(raw_json, 1.0)
+    res_json = rawjson2json(raw_json, args.sample_interval)
     
     # save res_json
     with open(os.path.join(args.save_json_dir, os.path.splitext(os.path.basename(wav_path))[0] + '.json'), 'w') as f:
